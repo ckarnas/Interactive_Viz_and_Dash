@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pet Pals!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron" style="text-align: center">
+            <h1>Belly Button Biodiversity</h1>
+            <p>Gross.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Look at all the crap in our belly buttons!</h2>
+                <div id="plot"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2><a href="/send">Something might go here, . . . or not!</a></h2>
+                <h2>Pick a Sample Name</h2>
+                <select id="selDataset" onchange="optionChanged(this.value)">
+
+                    <!--some crazy stuff I'm adding-->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>
+                    <script type="text/javascript">
+
+                        var url = "/names";
+                        Plotly.d3.json(url, function(error, response) {
+
+                            console.log(response);
+
+                            var data = response;
+                        console.log(data);
+                        });
+                        
+                    var samp_names = [];
+                    url="/names";
+                    //url="http://localhost:500/names"
+
+                    Plotly.d3.json(url, function(error, response) {
+
+                        if (error) return console.warn(error);
+                        console.log(response)
+                        //samp_names=[response.data];
+                        samp_names=[response["sample names"]][0];
+                        console.log(samp_names)
+                        console.log(5)
+                    });
+    
+        // Grab values from the response json object to build the plots
+        // var name = response.dataset.name;
+
+
+                        // Function for displaying 
+                        function render() {
+
+                    // Looping through the array of presidents
+                        for (var i = 0; i < samp_names.length; i++) {
+                            console.log("hi");
+
+                    // Then dynamicaly generating buttons for each movie in the array.
+                        //var a = d3.select("#selDataset").append("option");
+                    // Adding a class
+                    d3.select("#selDataset").append("option");
+                    // Setting the text of the HTML <h2> element to be the president's name
+                        //a.text(samp_names[i]);
+                        }
+                    }
+
+      // Call the function to render the page.
+
+      render();
+    </script>
+
+
+                </select>
+                    <!-- <option value="dataset0"></option>
+                    <option value="dataset1">United States</option>
+                    <option value="dataset2">UK</option>
+                    <option value="dataset3">Canada</option>
+                </select> -->
+            
+                <div id="pie"></div>
+            
+                <script src="../static/js/plots.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
