@@ -161,8 +161,11 @@ def samp_samps(sample):
     # t = text("SELECT {0} FROM 'samples'".format(sample))
 	# result = db.execute(t)
     # print(result)
-	# return jsonfy(result) 
+	 #return jsonfy(result) 
 
+#This part said render form.html in the pet pals thing
+    #return render_template("index.html")
+    #return render_template('index.html', {'boys': years["boys"],'girls': years["girls"]})
 
     # print(samples['{0}'.format(sample)])
 

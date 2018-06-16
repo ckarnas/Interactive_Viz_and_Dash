@@ -7,7 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pet Pals!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!--<script src="../static/js/plots.js"></script>-->
+
 </head>
 
 <body>
@@ -26,7 +29,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h2><a href="/send">Something might go here, . . . or not!</a></h2>
+                <h2>
+                    <a href="/send">Something might go here, . . . or not!</a>
+                </h2>
                 <h2>Pick a Sample Name</h2>
                 <select id="selDataset" onchange="optionChanged(this.value)">
 
@@ -34,64 +39,108 @@
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>
                     <script type="text/javascript">
 
-                        var url = "/names";
-                        Plotly.d3.json(url, function(error, response) {
+                         var url = "/names";
+                         Plotly.d3.json(url, function (error, response) {
 
-                            console.log(response);
+                        //     console.log(response);
 
-                            var data = response;
-                        console.log(data);
-                        });
-                        
-                    var samp_names = [];
-                    url="/names";
-                    //url="http://localhost:500/names"
+                             var data = response;
+                        //     console.log(data);
+                         });
 
-                    Plotly.d3.json(url, function(error, response) {
+                         var samp_names = [];
+                         url = "/names";
 
-                        if (error) return console.warn(error);
-                        console.log(response)
-                        //samp_names=[response.data];
-                        samp_names=[response["sample names"]][0];
-                        console.log(samp_names)
-                        console.log(5)
-                    });
-    
-        // Grab values from the response json object to build the plots
-        // var name = response.dataset.name;
+                         Plotly.d3.json(url, function (error, response) {
+
+                             if (error) return console.warn(error);
+                             let dropDowm = ''
+                        //     console.log(Object.keys(response))
+                             response['sample names'].forEach(element => {
+                                 let strEl = `<option value="results">${element}</option>`
+                                 dropDowm += strEl
+                             });
+
+                             $('#selDataset').append(dropDowm)
+                         });
 
 
-                        // Function for displaying 
-                        function render() {
 
-                    // Looping through the array of presidents
-                        for (var i = 0; i < samp_names.length; i++) {
-                            console.log("hi");
+                        // // Function for displaying 
+                         function render() {
 
-                    // Then dynamicaly generating buttons for each movie in the array.
-                        //var a = d3.select("#selDataset").append("option");
-                    // Adding a class
-                    d3.select("#selDataset").append("option");
-                    // Setting the text of the HTML <h2> element to be the president's name
-                        //a.text(samp_names[i]);
-                        }
-                    }
+                        //     // Looping through the array 
+                             for (var i = 0; i < samp_names.length; i++) {
+                        //         console.log("hi");
 
-      // Call the function to render the page.
+                                 d3.select("#selDataset").append("option");
+                             }
+                         }
 
-      render();
-    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+                        // // Call the function to render the page.
+
+                         render();
+                         
+                    </script>
 
 
                 </select>
-                    <!-- <option value="dataset0"></option>
+                <!-- <option value="dataset0"></option>
                     <option value="dataset1">United States</option>
                     <option value="dataset2">UK</option>
                     <option value="dataset3">Canada</option>
                 </select> -->
-            
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <!-- <div class="well">
+                            <h5>SELECT Sample:</h5>
+                            <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                        </div> -->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Sample MetaData</h3>
+                            </div>
+                            <div id="sample-metadata" class="panel-body"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="pie"></div>
+                    </div>
+
+                </div>
+            </div>
                 <div id="pie"></div>
-            
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="bubble"></div>
+                    </div>
+                </div>
+
                 <script src="../static/js/plots.js"></script>
             </div>
         </div>
